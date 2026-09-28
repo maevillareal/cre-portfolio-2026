@@ -265,18 +265,17 @@
   @media(max-width:600px){.cta{padding:72px 22px;border-radius:28px}}
   .cta h2{font-size:clamp(2.4rem,6vw,4.6rem);margin-bottom:22px;letter-spacing:-.045em}
   .cta p{color:var(--grey);max-width:48ch;margin:0 auto 20px;font-size:1.05rem}
+  .cta-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+  .btn .ic{width:16px;height:16px}
+  .btn-ghost.copied{border-color:var(--lime);color:var(--lime)}
 
   /* ---------- footer ---------- */
-  footer{position:relative;overflow:hidden;border-top:1px solid var(--line);padding:40px 0 0;color:var(--grey);font-size:.86rem}
+  footer{position:relative;overflow:hidden;border-top:1px solid var(--line);padding:40px 0;color:var(--grey);font-size:.86rem}
   .foot-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;align-items:center}
   .socials{display:flex;gap:8px}
   .socials a{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.03);border:1px solid var(--line-2);
     display:flex;align-items:center;justify-content:center;font-size:.74rem;font-weight:700;color:var(--white);transition:all .25s var(--ease)}
   .socials a:hover{color:var(--bg);background:var(--lime);border-color:var(--lime);transform:translateY(-3px)}
-  .giant{font-family:var(--display);font-weight:800;font-size:clamp(7rem,30vw,26rem);line-height:.78;letter-spacing:-.06em;text-align:center;
-    margin-top:40px;user-select:none;pointer-events:none;
-    background:linear-gradient(180deg,rgba(198,241,53,.22),rgba(198,241,53,0) 85%);-webkit-background-clip:text;background-clip:text;color:transparent;
-    transform:translateY(12%)}
 </style>
 <script>document.documentElement.classList.add("js")</script>
 </head>
@@ -511,7 +510,10 @@
       <div class="kicker">Contact</div>
       <h2>Let's work <em class="s">together</em></h2>
       <p>Available for remote design and marketing support — flexible across time zones and multiple brands.</p>
-      <a class="btn" href="mailto:norleenvillareal@gmail.com" style="margin-top:12px">Contact Me <span class="ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+      <div class="cta-actions">
+        <a class="btn" href="mailto:norleenvillareal@gmail.com">Contact Me <span class="ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+        <button class="btn btn-ghost" id="copyEmail" type="button" data-email="norleenvillareal@gmail.com"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span class="lbl">Copy email address</span></button>
+      </div>
     </div>
   </section>
 
@@ -527,7 +529,6 @@
       <a href="https://dribbble.com/nmaev" aria-label="Dribbble" target="_blank" rel="noopener">Dr</a>
     </div>
   </div>
-  <div class="giant" aria-hidden="true">MAE</div>
 </footer>
 
 <div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Image preview">
@@ -665,6 +666,16 @@
       if(e.key==='ArrowRight')step(1);
       if(e.key==='ArrowLeft')step(-1);
     });
+  })();
+  // copy email
+  (function(){
+    const b=document.getElementById('copyEmail'),l=b.querySelector('.lbl'),email=b.dataset.email;let t;
+    function done(ok){l.textContent=ok?'Copied!':email;b.classList.toggle('copied',ok);clearTimeout(t);t=setTimeout(()=>{l.textContent='Copy email address';b.classList.remove('copied');},2200);}
+    b.addEventListener('click',()=>{
+      if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(email).then(()=>done(true),()=>fallback());}else fallback();
+    });
+    function fallback(){const ta=document.createElement('textarea');ta.value=email;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();
+      let ok=false;try{ok=document.execCommand('copy');}catch(e){}ta.remove();done(ok);}
   })();
 </script>
 </body>
