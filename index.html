@@ -20,14 +20,14 @@
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;overflow-x:clip}
-  main,footer{overflow-x:clip}
+  footer{overflow-x:clip}
   body{background:var(--bg);color:var(--white);font-family:var(--sans);line-height:1.6;font-size:16px;
     padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);overflow-x:clip;
     -webkit-font-smoothing:antialiased}
   body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.05;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
   h1,h2,h3{font-family:var(--display);font-weight:700;letter-spacing:-.03em;color:var(--white);line-height:1.05}
-  em.s{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--lime);letter-spacing:-.01em;padding-right:.08em;
+  em.s{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--lime);letter-spacing:-.01em;padding:0 .1em .16em 0;margin-bottom:-.16em;
     background:linear-gradient(90deg,var(--lime) 10%,var(--mint) 95%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
   a{color:inherit;text-decoration:none}
   img{max-width:100%;display:block}
@@ -339,7 +339,7 @@
       <div class="dots" id="dots"></div>
       <a class="badge" href="#work" aria-label="View Work Samples">
         <svg class="ring" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="circ" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"/></defs>
-          <text font-family="Inter Tight, Inter, sans-serif" font-size="10.4" font-weight="700" letter-spacing="2.2" fill="#0A0D09"><textPath href="#circ">VIEW WORK SAMPLES • VIEW WORK SAMPLES •</textPath></text></svg>
+          <text font-family="Inter Tight, Inter, sans-serif" font-size="10.4" font-weight="700" letter-spacing="2.2" fill="#0A0D09"><textPath href="#circ" textLength="272" lengthAdjust="spacing">VIEW WORK SAMPLES • VIEW WORK SAMPLES •</textPath></text></svg>
         <span class="mid"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
     </div>
