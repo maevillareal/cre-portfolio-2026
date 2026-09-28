@@ -164,14 +164,15 @@
   @media(max-width:900px){.about-grid{grid-template-columns:1fr;gap:40px}}
   .portrait-wrap{position:relative;padding:28px 0}
   .portrait-lines{position:absolute;left:-22%;right:-22%;top:10%;width:144%;height:80%;pointer-events:none;overflow:visible}
-  .portrait{position:relative;aspect-ratio:4/4.6;border-radius:220px 220px 32px 32px;padding:3px;
-    background:linear-gradient(180deg,var(--lime),#9EF06A 50%,var(--mint));box-shadow:0 30px 80px -30px rgba(121,239,198,.35)}
-  .portrait-in{position:relative;height:100%;border-radius:217px 217px 29px 29px;overflow:hidden;background:#EADBC8;isolation:isolate}
-  .portrait-in::before{content:'';position:absolute;left:-10%;right:-10%;bottom:-2%;height:36%;z-index:0;
-    background:linear-gradient(90deg,var(--lime),var(--mint));border-radius:50% 50% 0 0/60% 60% 0 0}
-  .portrait img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;object-position:50% 15%}
+  .portrait{position:relative;aspect-ratio:4/4.8;border-radius:220px 220px 32px 32px;padding:2px;
+    background:linear-gradient(180deg,rgba(198,241,53,.7),rgba(198,241,53,.15))}
+  .portrait-in{position:relative;height:100%;border-radius:218px 218px 30px 30px;overflow:hidden;
+    background:radial-gradient(120% 90% at 50% 100%,rgba(198,241,53,.55),rgba(198,241,53,.08) 55%,var(--panel) 80%)}
+  .portrait-in::before{content:'';position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:40px 40px;mask-image:linear-gradient(to bottom,#000,transparent 70%);-webkit-mask-image:linear-gradient(to bottom,#000,transparent 70%)}
+  .portrait img{position:relative;width:100%;height:100%;object-fit:cover;object-position:50% 15%}
   @media(max-width:900px){.portrait-wrap{max-width:400px;width:100%}}
-  @media(max-width:560px){.portrait{border-radius:180px 180px 28px 28px}.portrait-in{border-radius:177px 177px 25px 25px}}
+  @media(max-width:560px){.portrait{border-radius:180px 180px 28px 28px}.portrait-in{border-radius:178px 178px 26px 26px}}
   .about-copy h2{font-size:clamp(2.1rem,4.6vw,3.4rem);margin-bottom:28px}
   .about-copy p{color:var(--grey);margin-bottom:16px;max-width:60ch;font-size:1.02rem}
   .about-copy p:first-of-type{color:var(--white);font-size:1.15rem;line-height:1.55}
@@ -370,7 +371,7 @@
     <div class="about-grid">
       <div class="portrait-wrap rv">
         <svg class="portrait-lines" viewBox="0 0 600 400" preserveAspectRatio="none" aria-hidden="true" fill="none">
-          <defs><linearGradient id="pl" x1="0" x2="1"><stop offset="0" stop-color="#C6F135" stop-opacity="0"/><stop offset=".3" stop-color="#C6F135" stop-opacity=".55"/><stop offset=".7" stop-color="#79EFC6" stop-opacity=".55"/><stop offset="1" stop-color="#79EFC6" stop-opacity="0"/></linearGradient></defs>
+          <defs><linearGradient id="pl" x1="0" x2="1"><stop offset="0" stop-color="#C6F135" stop-opacity="0"/><stop offset=".3" stop-color="#C6F135" stop-opacity=".55"/><stop offset=".7" stop-color="#C6F135" stop-opacity=".45"/><stop offset="1" stop-color="#C6F135" stop-opacity="0"/></linearGradient></defs>
           <path d="M0 330 C 90 300, 160 310, 250 360 S 470 250, 600 90" stroke="url(#pl)" stroke-width="2"/>
           <path d="M0 250 C 120 200, 200 260, 300 230 S 500 120, 600 150" stroke="url(#pl)" stroke-width="1.2" opacity=".5"/>
         </svg>
