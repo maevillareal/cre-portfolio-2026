@@ -13,7 +13,7 @@
 <style>
   :root{
     --bg:#0A0D09; --panel:#10140E; --panel-2:#141A11; --line:rgba(255,255,255,.08); --line-2:rgba(255,255,255,.14);
-    --lime:#C6F135; --lime-soft:rgba(198,241,53,.12); --lime-line:rgba(198,241,53,.35);
+    --lime:#C6F135; --mint:#79EFC6; --lime-soft:rgba(198,241,53,.12); --lime-line:rgba(198,241,53,.35);
     --white:#F2F4EC; --grey:#8F998A; --grey-2:#6B7466;
     --radius:22px; --ease:cubic-bezier(.2,.7,.2,1);
     --sans:'Inter',system-ui,sans-serif; --display:'Inter Tight','Inter',sans-serif; --serif:'Instrument Serif',Georgia,serif;
@@ -27,7 +27,8 @@
   body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.05;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
   h1,h2,h3{font-family:var(--display);font-weight:700;letter-spacing:-.03em;color:var(--white);line-height:1.05}
-  em.s{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--lime);letter-spacing:-.01em}
+  em.s{font-family:var(--serif);font-style:italic;font-weight:400;color:var(--lime);letter-spacing:-.01em;padding-right:.08em;
+    background:linear-gradient(90deg,var(--lime) 10%,var(--mint) 95%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
   a{color:inherit;text-decoration:none}
   img{max-width:100%;display:block}
   ::selection{background:var(--lime);color:var(--bg)}
@@ -40,6 +41,12 @@
   .js .rv{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
   .js .rv.in{opacity:1;transform:none}
   @media(prefers-reduced-motion:reduce){.js .rv{opacity:1;transform:none;transition:none}*{animation:none!important}}
+
+  /* cursor glow */
+  .cursor-glow{position:fixed;left:0;top:0;width:560px;height:560px;margin:-280px 0 0 -280px;border-radius:50%;pointer-events:none;z-index:0;
+    background:radial-gradient(closest-side,rgba(198,241,53,.13),rgba(121,239,198,.05) 55%,transparent);opacity:0;transition:opacity .5s;will-change:transform}
+  .cursor-glow.on{opacity:1}
+  @media(hover:none),(pointer:coarse){.cursor-glow{display:none}}
 
   /* ---------- nav ---------- */
   header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;padding:16px 20px}
@@ -99,7 +106,7 @@
   .eyebrow i::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid var(--lime);animation:ping 2s var(--ease) infinite}
   @keyframes ping{0%{transform:scale(.6);opacity:1}100%{transform:scale(1.8);opacity:0}}
   .hero h1{font-size:clamp(3rem,7.4vw,6rem);line-height:.95;margin-bottom:28px;letter-spacing:-.045em}
-  .hero h1 em.s{display:block;font-size:1.02em;line-height:1;margin-top:.04em}
+  .hero h1 em.s{display:table;font-size:1.02em;line-height:1;margin-top:.04em}
   .hero p{color:var(--grey);max-width:44ch;margin-bottom:36px;font-size:1.08rem}
   .hero-actions{display:flex;gap:12px;flex-wrap:wrap}
 
@@ -155,13 +162,16 @@
   /* ---------- about ---------- */
   .about-grid{display:grid;grid-template-columns:minmax(0,460px) 1fr;gap:72px;align-items:center}
   @media(max-width:900px){.about-grid{grid-template-columns:1fr;gap:40px}}
-  .portrait{position:relative;border-radius:32px;overflow:hidden;border:1px solid var(--line-2);
-    background:radial-gradient(120% 90% at 50% 100%,rgba(198,241,53,.55),rgba(198,241,53,.08) 55%,var(--panel) 80%)}
-  .portrait::before{content:'';position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
-    background-size:40px 40px;mask-image:linear-gradient(to bottom,#000,transparent 70%);-webkit-mask-image:linear-gradient(to bottom,#000,transparent 70%)}
-  .portrait{aspect-ratio:4/5}
-  .portrait img{position:relative;width:100%;height:100%;object-fit:cover;object-position:50% 15%}
-  @media(max-width:900px){.portrait{max-width:380px}}
+  .portrait-wrap{position:relative;padding:28px 0}
+  .portrait-lines{position:absolute;left:-22%;right:-22%;top:10%;width:144%;height:80%;pointer-events:none;overflow:visible}
+  .portrait{position:relative;aspect-ratio:4/4.6;border-radius:220px 220px 32px 32px;padding:3px;
+    background:linear-gradient(180deg,var(--lime),#9EF06A 50%,var(--mint));box-shadow:0 30px 80px -30px rgba(121,239,198,.35)}
+  .portrait-in{position:relative;height:100%;border-radius:217px 217px 29px 29px;overflow:hidden;background:#EADBC8;isolation:isolate}
+  .portrait-in::before{content:'';position:absolute;left:-10%;right:-10%;bottom:-2%;height:36%;z-index:0;
+    background:linear-gradient(90deg,var(--lime),var(--mint));border-radius:50% 50% 0 0/60% 60% 0 0}
+  .portrait img{position:relative;z-index:1;width:100%;height:100%;object-fit:cover;object-position:50% 15%}
+  @media(max-width:900px){.portrait-wrap{max-width:400px;width:100%}}
+  @media(max-width:560px){.portrait{border-radius:180px 180px 28px 28px}.portrait-in{border-radius:177px 177px 25px 25px}}
   .about-copy h2{font-size:clamp(2.1rem,4.6vw,3.4rem);margin-bottom:28px}
   .about-copy p{color:var(--grey);margin-bottom:16px;max-width:60ch;font-size:1.02rem}
   .about-copy p:first-of-type{color:var(--white);font-size:1.15rem;line-height:1.55}
@@ -280,6 +290,7 @@
 <script>document.documentElement.classList.add("js")</script>
 </head>
 <body>
+<div class="cursor-glow" id="cglow" aria-hidden="true"></div>
 
 <header>
   <div class="nav">
@@ -357,7 +368,14 @@
 
   <section id="about">
     <div class="about-grid">
-      <div class="portrait rv"><img src="https://ucarecdn.com/cdb8fdf8-52f6-4ccc-bad9-b5176f067d93/maee.png" alt="Mae Villareal"></div>
+      <div class="portrait-wrap rv">
+        <svg class="portrait-lines" viewBox="0 0 600 400" preserveAspectRatio="none" aria-hidden="true" fill="none">
+          <defs><linearGradient id="pl" x1="0" x2="1"><stop offset="0" stop-color="#C6F135" stop-opacity="0"/><stop offset=".3" stop-color="#C6F135" stop-opacity=".55"/><stop offset=".7" stop-color="#79EFC6" stop-opacity=".55"/><stop offset="1" stop-color="#79EFC6" stop-opacity="0"/></linearGradient></defs>
+          <path d="M0 330 C 90 300, 160 310, 250 360 S 470 250, 600 90" stroke="url(#pl)" stroke-width="2"/>
+          <path d="M0 250 C 120 200, 200 260, 300 230 S 500 120, 600 150" stroke="url(#pl)" stroke-width="1.2" opacity=".5"/>
+        </svg>
+        <div class="portrait"><div class="portrait-in"><img src="https://ucarecdn.com/cdb8fdf8-52f6-4ccc-bad9-b5176f067d93/maee.png" alt="Mae Villareal"></div></div>
+      </div>
       <div class="about-copy rv">
         <div class="kicker">About</div>
         <h2>Hi, I'm <em class="s">Mae</em></h2>
@@ -667,6 +685,17 @@
       if(e.key==='ArrowLeft')step(-1);
     });
   })();
+  // cursor glow (eased follow)
+  (function(){
+    const g=document.getElementById('cglow');
+    if(!matchMedia('(hover:hover) and (pointer:fine)').matches||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+    let tx=innerWidth/2,ty=innerHeight/3,x=tx,y=ty,raf=0;
+    function tick(){x+=(tx-x)*.12;y+=(ty-y)*.12;g.style.transform=`translate3d(${x}px,${y}px,0)`;
+      raf=(Math.abs(tx-x)+Math.abs(ty-y)>.5)?requestAnimationFrame(tick):0;}
+    addEventListener('pointermove',e=>{tx=e.clientX;ty=e.clientY;g.classList.add('on');if(!raf)raf=requestAnimationFrame(tick);},{passive:true});
+    document.addEventListener('pointerleave',()=>g.classList.remove('on'));
+  })();
+
   // copy email
   (function(){
     const b=document.getElementById('copyEmail'),l=b.querySelector('.lbl'),email=b.dataset.email;let t;
