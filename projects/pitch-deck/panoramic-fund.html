@@ -113,10 +113,6 @@
   .pager .next{text-align:right}
   .related h2{font-size:1.5rem;margin-bottom:24px}
 </style>
-<style id="img-protect-css">
-  /* image protection: no drag, no long-press save, no selection */
-  img,[data-lightbox]{-webkit-user-drag:none;user-drag:none;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
-</style>
 </head>
 <body>
 
@@ -240,18 +236,6 @@
       if(e.key==='ArrowRight')step(1);
       if(e.key==='ArrowLeft')step(-1);
     });
-  })();
-</script>
-<script id="img-protect-js">
-  // image protection: block right-click, drag and middle-click on photos and gallery links
-  (function(){
-    const sel='img,[data-lightbox],.lb';
-    const hit=e=>e.target.closest&&e.target.closest(sel);
-    document.addEventListener('contextmenu',e=>{if(hit(e))e.preventDefault();});
-    document.addEventListener('dragstart',e=>{if(hit(e))e.preventDefault();});
-    document.addEventListener('auxclick',e=>{if(e.target.closest&&e.target.closest('[data-lightbox]'))e.preventDefault();});
-    document.addEventListener('mousedown',e=>{if(e.button===1&&e.target.closest&&e.target.closest('[data-lightbox]'))e.preventDefault();});
-    document.querySelectorAll('img').forEach(i=>i.setAttribute('draggable','false'));
   })();
 </script>
 </body>
