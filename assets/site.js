@@ -159,22 +159,18 @@
     let cards=[...grid.children];
     const isLand=c=>c.classList.contains('land');
     // preview: two full rows (a landscape fills a row; squares fill it in pairs)
-    const ROWS=2;const picked=[];let rows=0,pending=null,wideOne=null;
+    const ROWS=2;const picked=[];let rows=0,pending=null;
     for(const c of cards){
       if(rows>=ROWS)break;
       if(isLand(c)){if(!pending){picked.push(c);rows++;}}
       else if(pending){picked.push(pending,c);pending=null;rows++;}
       else pending=c;
     }
-    if(pending&&rows<ROWS){picked.push(pending);wideOne=pending;}
+    if(pending&&picked.length===0)picked.push(pending);
     picked.slice().reverse().forEach(c=>grid.insertBefore(c,grid.firstChild));
     const show=picked;
     cards=[...grid.children];
-    cards.forEach(c=>{c.classList.toggle('ws-more',!show.includes(c));c.classList.remove('wide');});
-    // an odd square left alone in its row becomes a full-width crop
-    const visible=cat.classList.contains('open')?cards:show;
-    const squares=visible.filter(c=>!isLand(c));
-    if(squares.length%2===1)(cat.classList.contains('open')?squares[squares.length-1]:(wideOne||squares[squares.length-1])).classList.add('wide');
+    cards.forEach(c=>c.classList.toggle('ws-more',!show.includes(c)));
     if(btn){const left=cards.length-show.length;btn.querySelector('.n').textContent='+'+left;btn.hidden=left===0;}
   }
   document.querySelectorAll('.ws-cat').forEach(cat=>{
