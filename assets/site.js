@@ -151,3 +151,21 @@
     update();
   });
 })();
+
+// work samples: landscape images span both columns; see more
+(function(){
+  document.querySelectorAll('.ws-card img').forEach(img=>{
+    const set=()=>{if(img.naturalWidth&&img.naturalWidth/img.naturalHeight>1.2)img.closest('.ws-card').classList.add('land');};
+    if(img.complete)set();else img.addEventListener('load',set,{once:true});
+  });
+  document.querySelectorAll('.ws-cat .see-more').forEach(b=>{
+    const cat=b.closest('.ws-cat'),lbl=b.querySelector('.lbl'),n=b.querySelector('.n'),cnt=n.textContent;
+    b.addEventListener('click',()=>{
+      const open=!cat.classList.contains('open');
+      cat.classList.toggle('open',open);b.setAttribute('aria-expanded',open);
+      lbl.textContent=open?'See less':'See more';n.style.display=open?'none':'';
+      cat.querySelectorAll('.ws-more img').forEach(i=>{i.loading='eager';});
+      if(!open)cat.scrollIntoView({behavior:'smooth',block:'start'});
+    });
+  });
+})();
