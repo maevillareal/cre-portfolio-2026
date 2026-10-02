@@ -152,19 +152,41 @@
   });
 })();
 
-// work samples: landscape images span both columns; see more
+// work samples: landscape images span both columns; preview = one full row; no lonely square
 (function(){
-  document.querySelectorAll('.ws-card img').forEach(img=>{
-    const set=()=>{if(img.naturalWidth&&img.naturalWidth/img.naturalHeight>1.2)img.closest('.ws-card').classList.add('land');};
-    if(img.complete)set();else img.addEventListener('load',set,{once:true});
-  });
-  document.querySelectorAll('.ws-cat .see-more').forEach(b=>{
-    const cat=b.closest('.ws-cat'),lbl=b.querySelector('.lbl'),n=b.querySelector('.n'),cnt=n.textContent;
+  function layout(cat){
+    const grid=cat.querySelector('.ws-grid'),btn=cat.querySelector('.see-more');
+    let cards=[...grid.children];
+    const isLand=c=>c.classList.contains('land');
+    // preview row: one landscape, or two squares
+    const first=cards[0];let show=[first];
+    if(!isLand(first)){
+      const sq=cards.slice(1).find(c=>!isLand(c));
+      if(sq){grid.insertBefore(sq,first.nextSibling);show.push(sq);}
+    }
+    cards=[...grid.children];
+    cards.forEach(c=>{c.classList.toggle('ws-more',!show.includes(c));c.classList.remove('wide');});
+    // an odd square left alone in its row becomes a full-width crop
+    const visible=cat.classList.contains('open')?cards:show;
+    const squares=visible.filter(c=>!isLand(c));
+    if(squares.length%2===1)squares[squares.length-1].classList.add('wide');
+    if(btn){const left=cards.length-show.length;btn.querySelector('.n').textContent='+'+left;btn.hidden=left===0;}
+  }
+  document.querySelectorAll('.ws-cat').forEach(cat=>{
+    const imgs=[...cat.querySelectorAll('.ws-card img')];
+    imgs.forEach(img=>{
+      const set=()=>{if(img.naturalWidth&&img.naturalWidth/img.naturalHeight>1.2)img.closest('.ws-card').classList.add('land');layout(cat);};
+      if(img.complete)set();else img.addEventListener('load',set,{once:true});
+    });
+    layout(cat);
+    const b=cat.querySelector('.see-more');if(!b)return;
+    const lbl=b.querySelector('.lbl'),n=b.querySelector('.n');
     b.addEventListener('click',()=>{
       const open=!cat.classList.contains('open');
       cat.classList.toggle('open',open);b.setAttribute('aria-expanded',open);
       lbl.textContent=open?'See less':'See more';n.style.display=open?'none':'';
-      cat.querySelectorAll('.ws-more img').forEach(i=>{i.loading='eager';});
+      cat.querySelectorAll('.ws-card img').forEach(i=>{i.loading='eager';});
+      layout(cat);
       if(!open)cat.scrollIntoView({behavior:'smooth',block:'start'});
     });
   });
